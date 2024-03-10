@@ -16,16 +16,12 @@ func main(){
 	switch os.Args[1] {
 	case "low":
 		size = internal.LOW
-		goto exec
 	case "mid":
 		size = internal.MID
-		goto exec
 	case "high":
 		size = internal.HIGH
-		goto exec
 	case "extreme":
 		size = internal.EXTREME
-		goto exec
 	case "help":
 		printHelpMsg()
 		os.Exit(0)
@@ -33,7 +29,6 @@ func main(){
 		printHelpMsg()
 		os.Exit(1)
 	}
-exec:
 	pw = getPasswd()
 	buf = make([]byte, 0, size)
 	buf = internal.Stretch(pw, size, buf)
