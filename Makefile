@@ -9,8 +9,8 @@ ALL_BIN := \
 	$(BINDIR)/gostretch-$(VERSION)-linux-arm64 \
 	$(BINDIR)/gostretch-$(VERSION)-darwin-amd64 \
 	$(BINDIR)/gostretch-$(VERSION)-darwin-arm64 \
-	$(BINDIR)/gostretch-$(VERSION)-windows-amd64 \
-	$(BINDIR)/gostretch-$(VERSION)-windows-arm64
+	$(BINDIR)/gostretch-$(VERSION)-windows-amd64.exe \
+	$(BINDIR)/gostretch-$(VERSION)-windows-arm64.exe
 
 .PHONY: all $(ALL_BIN)
 
@@ -31,8 +31,8 @@ $(BINDIR)/gostretch-$(VERSION)-darwin-amd64: cmd/main.go
 $(BINDIR)/gostretch-$(VERSION)-darwin-arm64: cmd/main.go
 	GOOS=darwin GOARCH=arm64 go build -o $@ $<
 
-$(BINDIR)/gostretch-$(VERSION)-windows-amd64: cmd/main.go
+$(BINDIR)/gostretch-$(VERSION)-windows-amd64.exe: cmd/main.go
 	GOOS=windows GOARCH=amd64 go build -o $@ $<
 
-$(BINDIR)/gostretch-$(VERSION)-windows-arm64: cmd/main.go
+$(BINDIR)/gostretch-$(VERSION)-windows-arm64.exe: cmd/main.go
 	GOOS=windows GOARCH=arm64 go build -o $@ $<
