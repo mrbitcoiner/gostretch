@@ -8,11 +8,20 @@ import (
 	"github.com/mrbitcoiner/gostretch/internal"
 )
 
+const Version string = "v0.1.0"
+
+func GetArg(index int) string {
+	if index >= len(os.Args) { return "" }
+	return os.Args[index]
+}
+
 func main(){
-	if len(os.Args) < 2 { printHelpMsg(); os.Exit(1) }
-	pw := ""
-	size := uintptr(0)
-	buf := []byte(nil)
+	if len(os.Args) < 2 { printHelpMsg(); os.Exit(-1) }
+	var (
+		pw = ""
+		size = uintptr(0)
+		buf = []byte(nil)
+	)
 	switch os.Args[1] {
 	case "low":
 		size = internal.LOW
@@ -25,9 +34,11 @@ func main(){
 	case "help":
 		printHelpMsg()
 		os.Exit(0)
+	case "version":
+		fmt.Println(Version)
 	default:
 		printHelpMsg()
-		os.Exit(1)
+		os.Exit(-1)
 	}
 	pw = getPasswd()
 	buf = make([]byte, 0, size)
@@ -44,11 +55,16 @@ func printHelpMsg(){
 }
 
 func getPasswd() string {
-	if len(os.Args) > 2 {
-		return os.Args[2]
+	var (
+		pw string
+	)
+	pw = GetArg(2)
+	if pw != "" { return pw }
+	fmt.Printf("Your password: ")
+	fmt.Scanf("%s", &pw)
+	if pw == "" {
+		fmt.Fprintln(os.Stderr, "empty password") 
+		os.Exit(-1)
 	}
-	r := ""
-	fmt.Printf("Your password, please: ")
-	fmt.Scanf("%s", &r)
-	return r
+	return pw
 }
